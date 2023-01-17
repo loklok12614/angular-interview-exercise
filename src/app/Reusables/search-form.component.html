@@ -1,0 +1,49 @@
+<div class="container">
+  <div class="card">
+    <div class="card-header">
+      <h3>Flight Search</h3>
+    </div>
+    <div class="card-body m-4">
+      <form [formGroup]="searchForm" (submit)="searchFlight()" class="form">
+        <div class="row d-flex">
+          <div class="form-group my-2 col-sm-12 col-md-6">
+            <label for="scheduledDepartureCity">Depart</label>
+            <input type="text" name="scheduledDepartureCity" formControlName="scheduledDepartureCity" 
+            (input)="forceUppercase(SearchFormControl, $event)" class="form-control" maxlength="3"/>
+          </div>
+          <div class="form-group my-2 col-sm-12 col-md-6">
+            <label for="scheduledArrivalCity">Arrive</label>
+            <input type="text" name="scheduledArrivalCity" formControlName="scheduledArrivalCity" 
+            (input)="forceUppercase(SearchFormControl, $event)" class="form-control" maxlength="3"/>
+          </div>
+
+          <div class="form-group my-2 col-sm-12 col-md-6">
+            <label for="scheduledDepartureDate">Departure Date</label>
+            <input type="date" name="scheduledDepartureDate" formControlName="scheduledDepartureDate"
+            class="form-control" />
+          </div>
+
+          <div class="form-group my-2 col-sm-6 col-md-3 mt-auto">
+            <div class="form-check">
+              <label for="includeCancelledFlights">Cancelled</label>
+              <input type="checkbox" name="includeCancelledFlights" formControlName="includeCancelledFlights"
+              class="form-check-input" />
+            </div>
+          </div>
+
+          <div class="form-group my-2 col-sm-6 col-md-3 mt-auto">
+            <div class="form-check">
+              <label for="includeDepartedFlights">Departed</label>
+              <input type="checkbox" name="includeDepartedFlights" formControlName="includeDepartedFlights"
+              class="form-check-input" />
+            </div>
+          </div>
+
+          <div class="form-group my-2 d-flex">
+            <button type="submit" class="btn btn-primary me-auto">Search</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

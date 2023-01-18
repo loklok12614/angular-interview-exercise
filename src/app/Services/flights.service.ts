@@ -4,12 +4,15 @@ import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 import { FlightResult } from '../Models/Flight-Result';
+import { FlightSearch } from '../Models/Flight-Search';
+import { ApiRequestService } from './api-request.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FlightsService {
   private healthEndpoint: string = 'https://apis.qa.alaskaair.com/aag/1/guestServices/flights/ping';
+  private flightsEndpoint: string = 'https://apis.qa.alaskaair.com/aag/1/guestServices/flights/scheduledrouting/flights/search';
 
   //
   // Example Flight Search call
@@ -24,23 +27,28 @@ export class FlightsService {
   // includeDepartedFlights
   //
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private apiRequestService: ApiRequestService) { }
 
   public getHealthPing(): Observable<string> {
-    const options = {
-      headers: new HttpHeaders({
-        'Ocp-Apim-Subscription-Key': environment.apiKey
-      }),
-    };
+    // const options = {
+    //   headers: new HttpHeaders({
+    //     'Ocp-Apim-Subscription-Key': environment.apiKey
+    //   }),
+    // };
 
-    return this.http.get<string>(this.healthEndpoint, options).pipe(
+    // return this.http.get<string>(this.healthEndpoint, options).pipe(
+    //   map((result: string) => {
+    //     return result;
+    //   })
+    // );
+    return this.apiRequestService.getRequest(this.healthEndpoint).pipe(
       map((result: string) => {
         return result;
       })
-    );
+    )
   }
 
-  public getFlightResults(): Observable<FlightResult[]>{
-    return null;
+  public getFlightResults(data: FlightSearch): Observable<FlightResult[]>{
+    return this.apiRequestService.getRequest(this.flightsEndpoint, data);
   }
 }

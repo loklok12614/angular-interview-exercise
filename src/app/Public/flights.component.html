@@ -1,2 +1,26 @@
 <p>flights works!</p>
 <app-search-form></app-search-form>
+
+<div class="container">
+
+  <div *ngIf="isEmpty">
+    No Found Flight
+  </div>
+  <table class="table" *ngIf="isEmpty">
+    <thead>
+      <tr>
+        <th>Flight#</th>
+        <th>Departure Time</th>
+        <th>Arrival Time</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let flight of flightResult">
+        <td>{{ flight.flightNumber}}</td>
+        <td>{{ flight.departureTime}}</td>
+        <td>{{ flight.arrivalTime}}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

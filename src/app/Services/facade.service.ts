@@ -1,5 +1,6 @@
 import { Injectable, Injector } from '@angular/core';
 import { FlightsService } from './flights.service';
+import { FlightSearch } from '../Models/Flight-Search';
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +21,7 @@ export class FacadeService {
     return this.flightService.getHealthPing();
   }
 
-  getFlightResults(){
-    return this.flightService.getFlightResults();
+  getFlightResults(data: FlightSearch){
+    return this.flightService.getFlightResults(data);
   }
 }

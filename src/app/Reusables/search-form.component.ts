@@ -3,6 +3,7 @@ import { FlightSearch } from '../Models/Flight-Search';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { CustomValidatorService } from '../CustomValidators/custom-validator.service';
 import { Router, ActivatedRoute } from '@angular/router';
+import { FacadeService } from '../Services/facade.service';
 
 @Component({
   selector: 'app-search-form',
@@ -23,11 +24,12 @@ export class SearchFormComponent {
   constructor(private router:Router,
     private activatedRoute: ActivatedRoute, 
     private formBuilder: FormBuilder, 
-    private customValidator: CustomValidatorService) {
-
-  }
+    private customValidator: CustomValidatorService,
+    private facadeService: FacadeService) {}
 
   ngOnInit(): void {
+
+
     var departCity = this.activatedRoute.snapshot.queryParamMap.get('scheduledDepartureCity') ? 
       this.activatedRoute.snapshot.queryParamMap.get('scheduledDepartureCity') : 'SFO';
     var arriveCity = this.activatedRoute.snapshot.queryParamMap.get('scheduledArrivalCity') ? 
@@ -69,6 +71,12 @@ export class SearchFormComponent {
       }).then(() => {
         window.location.reload();
       });
+
+      // this.facadeService.populateFormData(this.searchData);
+
+      // setTimeout(() => {
+      //   this.router.navigate(['/flights']);
+      // }, 1000);      
     }
   }
 

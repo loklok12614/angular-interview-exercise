@@ -2,9 +2,6 @@
 
 <div class="container">
 
-  <div *ngIf="isEmpty">
-    No Found Flight
-  </div>
   <div class="d-flex">
     <span>
       <h4>
@@ -18,7 +15,12 @@
       </h4>
     </span>
   </div>
-  <table class="table" *ngIf="isEmpty">
+
+  <div *ngIf="isEmpty">
+    No Found Flight
+  </div>
+
+  <table class="table" *ngIf="!isEmpty">
     <thead>
       <tr>
         <th>Flight#</th>
@@ -30,8 +32,8 @@
     <tbody>
       <tr *ngFor="let flight of flightResult">
         <td>{{ flight.flightNumber}}</td>
-        <td>{{ flight.departureTime}}</td>
-        <td>{{ flight.arrivalTime}}</td>
+        <td>{{ flight.departureTime | date: "h:mm a"}}</td>
+        <td>{{ flight.arrivalTime | date: "h:mm a"}}</td>
       </tr>
     </tbody>
   </table>

@@ -48,7 +48,25 @@ export class FlightsService {
     )
   }
 
-  public getFlightResults(data: FlightSearch): Observable<FlightResult[]>{
+  public getFlightResults(data: FlightSearch): Observable<any>{
     return this.apiRequestService.getRequest(this.flightsEndpoint, data);
+    // var flightResult = [
+    //   {
+    //     flightNumber: 'AE0111',
+    //     departureTime: '11:05',
+    //     arrivalTime: '15:30'
+    //   },
+    //   {
+    //     flightNumber: 'SW1921',
+    //     departureTime: '14:05',
+    //     arrivalTime: '19:30'
+    //   },
+    //   {
+    //     flightNumber: 'UA3211',
+    //     departureTime: '21:05',
+    //     arrivalTime: '23:30'
+    //   }
+    // ]
+    // return of(flightResult);
   }
 }

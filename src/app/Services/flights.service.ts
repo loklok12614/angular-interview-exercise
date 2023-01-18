@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { environment } from '../environments/environment';
+import { environment } from '../../environments/environment';
+import { FlightResult } from '../Models/Flight-Result';
 
 @Injectable({
   providedIn: 'root'
@@ -37,5 +38,9 @@ export class FlightsService {
         return result;
       })
     );
+  }
+
+  public getFlightResults(): Observable<FlightResult[]>{
+    return null;
   }
 }

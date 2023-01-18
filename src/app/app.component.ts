@@ -3,7 +3,7 @@ import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms'
 import {MatCalendarCellClassFunction} from '@angular/material/datepicker';
 import { CustomValidatorService } from '../app/CustomValidators/custom-validator.service'
 import { Observable } from 'rxjs';
-import { FlightsService } from './flights.service';
+import { FacadeService } from './Services/facade.service';
 import { FlightSearch } from './Models/Flight-Search';
 
 @Component({
@@ -12,13 +12,15 @@ import { FlightSearch } from './Models/Flight-Search';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
-  healthPing: Observable<string>;
+  healthPing: string;
 
-  constructor(private flightService: FlightsService) {
+  constructor(private facadeService: FacadeService) {
 
   }
 
   ngOnInit(): void {
-    this.healthPing = this.flightService.getHealthPing();
+    this.facadeService.getHealthPing().subscribe((healthPing: string) => {
+      this.healthPing = healthPing;
+    })
   }
 }

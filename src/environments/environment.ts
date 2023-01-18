@@ -1,10 +1,11 @@
 // This file can be replaced during build by using the `fileReplacements` array.
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
+import {api_key} from './key';
 
 export const environment = {
   production: false,
-  apiKey: 'YOUR_API_KEY_HERE'
+  apiKey: api_key
 };
 
 /*

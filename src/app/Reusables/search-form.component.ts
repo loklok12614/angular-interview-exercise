@@ -1,9 +1,8 @@
 import { Component } from '@angular/core';
 import { FlightSearch } from '../Models/Flight-Search';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { FlightsService } from '../flights.service';
 import { CustomValidatorService } from '../CustomValidators/custom-validator.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-search-form',
@@ -19,16 +18,27 @@ export class SearchFormComponent {
     includeDepartedFlights : false,
   };
   searchForm: FormGroup;
+  today: Date = new Date();
 
-  constructor(private router:Router, private formBuilder: FormBuilder, private customValidator: CustomValidatorService) {
+  constructor(private router:Router,
+    private activatedRoute: ActivatedRoute, 
+    private formBuilder: FormBuilder, 
+    private customValidator: CustomValidatorService) {
 
   }
 
   ngOnInit(): void {
+    var departCity = this.activatedRoute.snapshot.queryParamMap.get('scheduledDepartureCity') ? 
+      this.activatedRoute.snapshot.queryParamMap.get('scheduledDepartureCity') : 'SFO';
+    var arriveCity = this.activatedRoute.snapshot.queryParamMap.get('scheduledArrivalCity') ? 
+      this.activatedRoute.snapshot.queryParamMap.get('scheduledArrivalCity') : 'LGA';
+    var departDate = this.activatedRoute.snapshot.queryParamMap.get('scheduledDepartureDate') ? 
+      this.activatedRoute.snapshot.queryParamMap.get('scheduledDepartureDate') : this.today.toISOString().slice(0,10);
+    
     this.searchForm = this.formBuilder.group({
-      scheduledDepartureCity: ['SFO', Validators.required],
-      scheduledArrivalCity: ['LGA', Validators.required],
-      scheduledDepartureDate: [new Date(), Validators.required],
+      scheduledDepartureCity: [departCity, Validators.compose([Validators.required, this.customValidator.airportCodeValidator()])],
+      scheduledArrivalCity: [arriveCity, Validators.compose([Validators.required, this.customValidator.airportCodeValidator()])],
+      scheduledDepartureDate: [departDate, Validators.required],
       includeCancelledFlights: [false],
       includeDepartedFlights: [false]
     })
@@ -49,6 +59,8 @@ export class SearchFormComponent {
 
       this.router.navigate(['/flights'], {
         queryParams: this.searchData
+      }).then(() => {
+        window.location.reload();
       });
     }
   }

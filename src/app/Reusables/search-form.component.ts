@@ -34,13 +34,20 @@ export class SearchFormComponent {
       this.activatedRoute.snapshot.queryParamMap.get('scheduledArrivalCity') : 'LGA';
     var departDate = this.activatedRoute.snapshot.queryParamMap.get('scheduledDepartureDate') ? 
       this.activatedRoute.snapshot.queryParamMap.get('scheduledDepartureDate') : this.today.toISOString().slice(0,10);
+    var departed = this.activatedRoute.snapshot.queryParamMap.get('includeDepartedFlights') ? 
+      this.activatedRoute.snapshot.queryParamMap.get('includeDepartedFlights') == 'false' ? false : true : false;
+    var cancelled = this.activatedRoute.snapshot.queryParamMap.get('includeCancelledFlights') ? 
+      this.activatedRoute.snapshot.queryParamMap.get('includeCancelledFlights') == 'false' ? false : true : false;
     
     this.searchForm = this.formBuilder.group({
       scheduledDepartureCity: [departCity, Validators.compose([Validators.required, this.customValidator.airportCodeValidator()])],
       scheduledArrivalCity: [arriveCity, Validators.compose([Validators.required, this.customValidator.airportCodeValidator()])],
       scheduledDepartureDate: [departDate, Validators.required],
-      includeCancelledFlights: [false],
-      includeDepartedFlights: [false]
+      includeDepartedFlights: [departed],
+      includeCancelledFlights: [cancelled]
+    },
+    {
+      validator: this.customValidator.validDestination('scheduledDepartureCity', 'scheduledArrivalCity')
     })
   }
 

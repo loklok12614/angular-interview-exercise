@@ -20,9 +20,11 @@
             <input type="text" name="scheduledArrivalCity" formControlName="scheduledArrivalCity" 
             (input)="forceUppercase(SearchFormControl, $event)" class="form-control" maxlength="3"/>
             <span class="text-danger" *ngIf="(SearchFormControl['scheduledArrivalCity'].touched) && 
-                (SearchFormControl['scheduledArrivalCity'].errors?.['required'])">Departure City Is Required</span>
+                (SearchFormControl['scheduledArrivalCity'].errors?.['required'])">Arrival City Is Required</span>
             <span class="text-danger" *ngIf="(SearchFormControl['scheduledArrivalCity'].touched) && 
                 (SearchFormControl['scheduledArrivalCity'].errors?.['invalidAirportCode'])">Invalid Airport Code</span>
+            <span class="text-danger" *ngIf="(SearchFormControl['scheduledArrivalCity'].touched) &&
+                (SearchFormControl['scheduledArrivalCity'].errors?.['sameCityError'])">Arrival City cannot be same as Departure City</span>
           </div>
 
           <div class="form-group my-2 col-sm-12 col-md-6">
